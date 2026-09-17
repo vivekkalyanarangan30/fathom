@@ -1,0 +1,19 @@
+\begin{tabular}{lrlrlrl}
+\toprule
+ & \multicolumn{2}{c}{Qwen2.5-7B-1M 128k/$K{=}128$} & \multicolumn{2}{c}{Qwen2.5-7B-1M 128k/$K{=}512$} & \multicolumn{2}{c}{Qwen2.5-7B-1M 128k/$K{=}2048$} \\
+ & bits & error & bits & error & bits & error \\
+\midrule
+\textbf{Fathom KLT 48} & 56 & 0.0196 & 56 & 0.0048 & 56 & 0.0013 \\
+\textbf{Fathom KLT 64} & 74 & 0.0111 & 74 & 0.0025 & 74 & 0.0006 \\
+\textbf{Fathom KLT 80} & 92 & 0.0070 & 92 & 0.0016 & 92 & 0.0003 \\
+\textbf{Fathom raw 48} & 55 & 0.0300 & 55 & 0.0082 & 55 & 0.0025 \\
+\textbf{Fathom raw 64} & 73 & 0.0162 & 73 & 0.0036 & 73 & 0.0013 \\
+SparQ $r{=}16$ & 68 & 0.0303 & 68 & 0.0116 & 68 & 0.0055 \\
+SparQ $r{=}32$ & 136 & 0.0064 & 136 & 0.0022 & 136 & 0.0011 \\
+Double Sparsity & 136 & 0.0153 & 136 & 0.0052 & 136 & 0.0024 \\
+Loki $r{=}32$ & 136 & 0.0132 & 136 & 0.0033 & 136 & 0.0013 \\
+Loki $r{=}64$ & 272 & 0.0015 & 272 & 0.0004 & 272 & 0.0001 \\
+2-bit thumbnail & 288 & 0.0131 & 288 & 0.0022 & 288 & 0.0001 \\
+full 4-bit scan & 544 & 0.0002 & 544 & $<$0.0001 & 544 & $<$0.0001 \\
+\bottomrule
+\end{tabular}

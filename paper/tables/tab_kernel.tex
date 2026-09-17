@@ -1,0 +1,12 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{32k tokens} & \multicolumn{3}{c}{128k tokens} \\
+method & bits & scan ms & GB/s & bits & scan ms & GB/s \\
+\midrule
+Fathom 48 & 84 & 0.140 & 75 & 84 & 0.415 & 102 \\
+Fathom 64 & 95 & 0.155 & 77 & 95 & 0.457 & 106 \\
+SparQ $r{=}16$ (16 channels) & 68 & 0.060 & 148 & 68 & 0.164 & 218 \\
+32-channel scan & 136 & 0.102 & 175 & 136 & 0.291 & 245 \\
+full 4-bit scan & 544 & 0.330 & 217 & 544 & 1.010 & 282 \\
+\bottomrule
+\end{tabular}

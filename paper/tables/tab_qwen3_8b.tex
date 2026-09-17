@@ -1,0 +1,24 @@
+\begin{tabular}{lrlrl}
+\toprule
+ & \multicolumn{2}{c}{Qwen3-8B 16k/$K{=}256$} & \multicolumn{2}{c}{Qwen3-8B 32k/$K{=}512$} \\
+ & bits & error & bits & error \\
+\midrule
+\textbf{Fathom flat 40} & 47 & 0.0075 & 46 & 0.0142 \\
+\textbf{Fathom flat 48} & 56 & 0.0052 & 56 & 0.0081 \\
+\textbf{Fathom flat 64} & 74 & 0.0024 & 74 & 0.0024 \\
+\textbf{Fathom flat 80} & 92 & 0.0012 & 92 & 0.0010 \\
+\textbf{Fathom flat 128} & 146 & 0.0003 & 146 & 0.0001 \\
+\textbf{Fathom per-layer 40} & 47 & 0.0033 & 46 & 0.0091 \\
+\textbf{Fathom per-layer 48} & 56 & 0.0021 & 55 & 0.0074 \\
+\textbf{Fathom per-layer 64} & 74 & 0.0010 & 74 & 0.0021 \\
+\textbf{Fathom per-layer 48, plan from 16k} & -- & -- & 56 & 0.0103 \\
+\textbf{Fathom per-layer 64, plan from 16k} & -- & -- & 74 & 0.0035 \\
+SparQ $r{=}16$ & 68 & 0.0077 & 68 & 0.0080 \\
+SparQ $r{=}32$ & 136 & 0.0022 & 136 & 0.0012 \\
+Double Sparsity $c{=}32$ & 136 & 0.0037 & 136 & 0.0037 \\
+Loki $r{=}32$ & 136 & 0.0109 & 136 & 0.4033 \\
+Loki $r{=}64$ & 272 & 0.0004 & 272 & 0.0008 \\
+2-bit thumbnail & 288 & 0.0028 & 288 & 0.0102 \\
+full 4-bit scan & 544 & $<$0.0001 & 544 & $<$0.0001 \\
+\bottomrule
+\end{tabular}

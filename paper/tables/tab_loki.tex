@@ -1,0 +1,10 @@
+\begin{tabular}{lllll}
+\toprule
+Model & ctx/$k$ & $r{=}32$ fp16 (512 b) & $r{=}32$ 4-bit (136 b) & $r{=}64$ 4-bit (272 b) \\
+\midrule
+Qwen3-8B & 16k/256 & 0.0105 & 0.0109 & 0.0004 \\
+Qwen3-8B & 32k/512 & 0.4007 & 0.4033 & 0.0008 \\
+Qwen3-8B & 32k/128 & 0.6749 & 0.6898 & 0.0110 \\
+Llama-3.1-8B & 4k/128 & 0.0008 & 0.0008 & 0.0001 \\
+\bottomrule
+\end{tabular}

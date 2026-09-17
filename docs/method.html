@@ -1,0 +1,280 @@
+<title>How Fathom Works</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{--paper:#F6F6FA;--card:#FFFFFF;--ink:#1C1C2E;--mute:#5C5D75;--rule:#DCDCE8;--ind:#4A3FA8;--ind-soft:#E9E6F7;--base:#A25E14;--base-soft:#F6EBDD;--good:#2E7D5B;--good-soft:#E3F1EA;--bad:#B23A3A;--bad-soft:#F7E3E3;--cell:#EEEEF5;--cell-on:#4A3FA8;--cell-base:#C98A4A;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--paper:#15151F;--card:#1E1E2B;--ink:#ECECF4;--mute:#A7A8BE;--rule:#33344A;--ind:#9D93E8;--ind-soft:#2A2748;--base:#E0A060;--base-soft:#3A2D1C;--good:#6CC59A;--good-soft:#1F3A2E;--bad:#E88585;--bad-soft:#3E2323;--cell:#2A2A3C;--cell-on:#9D93E8;--cell-base:#C98A4A;}}
+:root[data-theme="dark"]{--paper:#15151F;--card:#1E1E2B;--ink:#ECECF4;--mute:#A7A8BE;--rule:#33344A;--ind:#9D93E8;--ind-soft:#2A2748;--base:#E0A060;--base-soft:#3A2D1C;--good:#6CC59A;--good-soft:#1F3A2E;--bad:#E88585;--bad-soft:#3E2323;--cell:#2A2A3C;--cell-on:#9D93E8;--cell-base:#C98A4A;}
+body{background:var(--paper);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.55;margin:0}
+.wrap{max-width:860px;margin:0 auto;padding:40px 22px 80px}
+h1{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:2.3rem;line-height:1.15;margin:0 0 8px;text-wrap:balance}
+h2{font-family:"IBM Plex Serif",Georgia,serif;font-weight:600;font-size:1.45rem;margin:56px 0 12px;text-wrap:balance}
+h3{font-family:"IBM Plex Sans",sans-serif;font-weight:600;font-size:1.05rem;margin:28px 0 8px}
+p{max-width:68ch;margin:0 0 14px}
+.lede{font-size:1.1rem;color:var(--mute);max-width:64ch}
+.snum{font-family:"IBM Plex Mono",monospace;font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ind);display:block;margin-bottom:4px}
+code,.mono{font-family:"IBM Plex Mono",Menlo,monospace;font-size:.92em}
+.eq{font-family:"IBM Plex Mono",monospace;background:var(--ind-soft);border-left:3px solid var(--ind);padding:12px 16px;margin:16px 0;font-size:.95rem;overflow-x:auto}
+.note{border-left:3px solid var(--rule);padding:10px 16px;margin:16px 0;color:var(--mute);max-width:70ch}
+.warn{border-left:3px solid var(--bad);background:var(--bad-soft);padding:10px 16px;margin:16px 0;max-width:70ch}
+.good{border-left:3px solid var(--good);background:var(--good-soft);padding:10px 16px;margin:16px 0;max-width:70ch}
+table{border-collapse:collapse;width:100%;font-size:.92rem;font-variant-numeric:tabular-nums;margin:14px 0 6px}
+.tw{overflow-x:auto}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--rule);vertical-align:top}
+th{font-weight:600;font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;color:var(--mute)}
+td.n,th.n{text-align:right;font-family:"IBM Plex Mono",monospace}
+tr.hi td{background:var(--ind-soft)}
+tr.bad td{color:var(--bad)}
+.ok{color:var(--good);font-weight:600}.no{color:var(--bad);font-weight:600}
+.cap{font-size:.82rem;color:var(--mute);margin:4px 0 18px;max-width:70ch}
+.card{background:var(--card);border:1px solid var(--rule);border-radius:6px;padding:18px 20px;margin:18px 0}
+.card h3{margin-top:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:640px){.grid2{grid-template-columns:1fr}}
+.kv{display:grid;grid-template-columns:150px 1fr;gap:4px 14px;font-size:.92rem;margin:10px 0}
+.kv b{font-weight:600;color:var(--mute);font-size:.8rem;letter-spacing:.04em;text-transform:uppercase;padding-top:2px}
+.bits{display:grid;grid-template-columns:repeat(4,22px);gap:3px;margin:8px 0}
+.bits span{height:22px;background:var(--cell);border-radius:2px}
+.bits span.on{background:var(--cell-on)}
+.bits span.b{background:var(--cell-base)}
+.bits span.hat{background:repeating-linear-gradient(45deg,var(--cell-base) 0 3px,var(--cell) 3px 6px)}
+.legend{font-size:.8rem;color:var(--mute);margin:6px 0 0}
+.tag{display:inline-block;font-family:"IBM Plex Mono",monospace;font-size:.75rem;padding:2px 8px;border-radius:10px;background:var(--base-soft);color:var(--base);margin-left:6px}
+svg text{font-family:"IBM Plex Sans",sans-serif;fill:var(--ink)}
+.foot{margin-top:60px;padding-top:16px;border-top:1px solid var(--rule);font-size:.85rem;color:var(--mute);max-width:70ch}
+</style>
+<div class="wrap">
+<h1>How Fathom Works</h1>
+<p class="lede">How top-k attention finds its k keys, what Loki, Double Sparsity, SparQ, landmark selection and thumbnail scans each read to do it, and the one change we make: read each channel to the depth its evidence deserves, straight out of the K cache. One worked example runs through every method.</p>
+
+<span class="snum">Step 1</span>
+<h2>The job every method shares</h2>
+<p>At each decode step the model has one new query vector <code>q</code> per head and <code>n</code> stored keys. Dense attention scores all <code>n</code> keys and reads all of their values. Top-k attention keeps only the <code>k</code> best-scoring keys (plus a few sink and local tokens), so the value read shrinks from <code>n</code> rows to <code>k</code>. That leaves a circularity: to know which <code>k</code> keys win, you still have to score all <code>n</code>.</p>
+<p>Every method in this page resolves the circularity the same way. It keeps a cheap <em>summary</em> of each key, scans all <code>n</code> summaries to rank the keys, then fetches the full keys and values of the winners. The summary scan is a stream of <code>n</code> small records, so its cost is <strong>bits per token</strong>, and at long context that stream is the largest thing the step reads.</p>
+<div class="eq">step cost ≈ weights + n × (summary bits / 8) + k × (full K+V row bytes)</div>
+<p>Numbers for Qwen3-8B (36 layers, 8 KV heads of 128 channels) at 32k tokens. Dense attention reads the whole KV cache, 4.8 GB per step. Top-k with k=512 per query head fetches the union of the four heads' winners, about 200 MB of rows per step, a cost that does not grow with the context, plus the scan. A Loki, Double Sparsity or SparQ (r=32) scan reads 32 coordinates of each key at 4 bits plus an fp16 block scale, 136 bits per token for each of the 288 layer-head pairs: 32,768 × 136 / 8 = 557 KB per pair, times 288 pairs, 160 MB per step at 32k. That term grows with <code>n</code>, reaching 5.1 GB at one million tokens while the winner rows stay near 200 MB. Every bit count on this page is per token, per KV head, per layer, and includes the fp16 block scale of every channel read (16 bits per 64 tokens per channel). Methods differ only in what the summary is, who decides its contents, and when.</p>
+
+<span class="snum">Step 2</span>
+<h2>A toy we can run every method on</h2>
+<p>Six stored keys, four channels each. Two query heads share this KV head, as in grouped-query attention. The channel spreads are deliberately unequal: channel 0 varies a lot across tokens, channel 3 barely moves. Real keys look like this after QK-norm.</p>
+<div class="tw"><table>
+<tr><th>token</th><th class="n">ch 0</th><th class="n">ch 1</th><th class="n">ch 2</th><th class="n">ch 3</th></tr>
+<tr><td>t0</td><td class="n">1.80</td><td class="n">0.40</td><td class="n">-0.20</td><td class="n">0.05</td></tr>
+<tr><td>t1</td><td class="n">-1.10</td><td class="n">0.90</td><td class="n">0.30</td><td class="n">-0.02</td></tr>
+<tr><td>t2</td><td class="n">0.30</td><td class="n">-1.20</td><td class="n">0.10</td><td class="n">0.04</td></tr>
+<tr><td>t3</td><td class="n">1.20</td><td class="n">0.70</td><td class="n">0.40</td><td class="n">0.01</td></tr>
+<tr><td>t4</td><td class="n">-0.60</td><td class="n">-0.30</td><td class="n">-0.50</td><td class="n">0.03</td></tr>
+<tr><td>t5</td><td class="n">0.90</td><td class="n">1.10</td><td class="n">-0.30</td><td class="n">-0.05</td></tr>
+<tr class="hi"><td>Var(k<sub>j</sub>)</td><td class="n">1.222</td><td class="n">0.755</td><td class="n">0.127</td><td class="n">0.001</td></tr>
+</table></div>
+<div class="tw"><table>
+<tr><th>query</th><th class="n">ch 0</th><th class="n">ch 1</th><th class="n">ch 2</th><th class="n">ch 3</th><th>exact scores t0..t5</th><th>true top-2</th></tr>
+<tr><td>head A</td><td class="n">3.0</td><td class="n">1.0</td><td class="n">2.0</td><td class="n">0.1</td><td class="mono">5.40, -1.80, -0.10, 5.10, -3.10, 3.19</td><td class="mono">t0, t3</td></tr>
+<tr><td>head B</td><td class="n">1.0</td><td class="n">2.0</td><td class="n">-1.0</td><td class="n">0.2</td><td class="mono">2.81, 0.40, -2.19, 2.20, -0.69, 3.39</td><td class="mono">t5, t0</td></tr>
+</table></div>
+<p class="cap">Full precision is 16 bits × 4 channels = 64 bits per token. Every method below tries to reproduce the two "true top-2" columns from far fewer bits. Head B is the hard case: t0 and t3 are 0.6 apart, and the gap comes from channel 2, where head B's weight is negative.</p>
+
+<span class="snum">Step 3</span>
+<h2>What the competition reads</h2>
+<p>Each card uses the same template. The 4×4 grid shows the 16 bit-cells of one token's 4-bit key (columns = channels, rows = bit planes from most to least significant); shaded cells are what the method reads per token. The "on the toy" line is the ranking the method produces from those bits.</p>
+
+<div class="card">
+<h3>Full 4-bit scan <span class="tag">KIVI-style quantized cache</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>every channel at 4 bits, per-block scale</span><b>reads per query</b><span>all 16 cells</span><b>who decides</b><span>nobody; fixed</span><b>bits / token</b><span>16 (+scales)</span></div>
+<p>Quantization alone. It halves the cache versus 8-bit and is the reference for "no information dropped". <strong>On the toy:</strong> head A <span class="mono">t3, t0</span>, head B <span class="mono">t5, t0</span>. Both sets correct; only the order inside head A's pair flipped.</p>
+</div><div>
+<div class="bits"><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span></div>
+<div class="legend">16 of 16 cells</div></div></div>
+</div>
+
+<div class="card">
+<h3>Loki <span class="tag">PCA projection</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>each key projected onto r principal directions of calibration keys, 4-bit</span><b>reads per query</b><span>all r coordinates</span><b>who decides</b><span>offline, from calibration data</span><b>bits / token</b><span>r × 4</span></div>
+<p>Changes the basis, then keeps the top r directions. Cheap when the keys really live in r dimensions. <strong>On the toy (r=2, 8 bits):</strong> head A <span class="mono">t0, t3</span> correct, head B <span class="mono">t5, t3</span> wrong. The two principal directions are almost exactly channels 0 and 1; channel 2, which decides head B, is projected away.</p>
+<p><strong>Where it breaks:</strong> rank. On Qwen3-8B at 32k, r=32 collapses to error 0.39 while r=64 is fine, and switching the coordinates to fp16 changes nothing. The basis is fixed for every query, so a direction that matters to one query and not on average is lost.</p>
+</div><div>
+<div class="bits"><span class="hat"></span><span class="hat"></span><span></span><span></span><span class="hat"></span><span class="hat"></span><span></span><span></span><span class="hat"></span><span class="hat"></span><span></span><span></span><span class="hat"></span><span class="hat"></span><span></span><span></span></div>
+<div class="legend">2 rotated coordinates × 4 bits (hatched: a different basis, not raw channels)</div></div></div>
+</div>
+
+<div class="card">
+<h3>Double Sparsity <span class="tag">outlier channels</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>a separate "label cache": c channels of every key at 4 bits</span><b>reads per query</b><span>the same c channels, always</span><b>who decides</b><span>offline, by average |q|·|k| per channel</span><b>bits / token</b><span>c × 4, on top of the full K cache</span></div>
+<p>Keeps raw channels, picks them once. <strong>On the toy (c=2, 8 bits):</strong> the offline rule picks channels 0 and 1. Head A <span class="mono">t0, t3</span> correct, head B <span class="mono">t5, t3</span> wrong, for the same reason as Loki: channel 2 is not in the set.</p>
+<p><strong>Where it breaks:</strong> the set is the same for every query, and it is an extra copy of data. Its 136-bit label cache is 17 bytes per token that our K cache does not need to exist.</p>
+</div><div>
+<div class="bits"><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span></div>
+<div class="legend">2 fixed channels × 4 bits</div></div></div>
+</div>
+
+<div class="card">
+<h3>SparQ <span class="tag">per-query channel pick</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>the K cache channel-major (4-bit here)</span><b>reads per query</b><span>the r channels where |q|, summed over the query heads that share the KV head, is largest</span><b>who decides</b><span>each query, once per KV head</span><b>bits / token</b><span>r × 4 plus scales: 68 at r=16, 136 at r=32</span></div>
+<p>The first method to let the query choose. Under grouped-query attention SparQ sums |q| over the heads of the group before picking, so one channel set is read per KV head. <strong>On the toy (r=2):</strong> the summed |q| is (4, 3, 3, 0.3); channels 0 and 1 are picked (channel 1 wins the tie with channel 2 by index). Head A <span class="mono">t0, t3</span> correct; head B <span class="mono">t5, t3</span> wrong, because channel 2, the one that separates t0 from t3 for head B, is not read at all. 8 bits, same mistake as Double Sparsity.</p>
+<p><strong>Where it breaks:</strong> two things. It ranks channels by |q| and ignores how much the keys vary in that channel. And it is all-or-nothing per channel: a chosen channel is read at full 4-bit depth, an unchosen one not at all. A variant that lets every head pick its own channels and reads the union is stronger but costs about twice the bytes; the paper reports it once as an ablation.</p>
+</div><div>
+<div class="bits"><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span><span class="b"></span><span class="b"></span><span></span><span></span></div>
+<div class="legend">2 channels chosen by the group's summed |q|, × 4 bits</div></div></div>
+</div>
+
+<div class="card">
+<h3>Block landmarks <span class="tag">Quest / ShadowKV-style</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>one summary key per block of b tokens (mean or min/max), fp16</span><b>reads per query</b><span>all landmarks, then whole blocks of the winners</span><b>who decides</b><span>the query, at block granularity</span><b>bits / token</b><span>16 × D / b = 256 for b = 8</span></div>
+<p>Scores fewer things instead of scoring each thing more cheaply. <strong>On the toy (blocks of 2):</strong> head A's best block is {t2, t3}, head B's is {t0, t1}. Each head gets one of its two true keys and one filler.</p>
+<p><strong>Where it breaks:</strong> granularity. When k is small relative to the block size, a block's mean hides its best token. In our runs the landmark baseline scored 0.577 at k=64 where every per-token scan scored 0.73 to 0.76, and it is a large extra index: 32 bytes per token.</p>
+</div><div>
+<div class="bits"><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span><span class="hat"></span></div>
+<div class="legend">not this token's bits at all: one fp16 vector per block</div></div></div>
+</div>
+
+<div class="card">
+<h3>2-bit thumbnail <span class="tag">FFD-style</span></h3>
+<div class="grid2"><div>
+<div class="kv"><b>stores</b><span>the K cache split into a 2-bit part and a residual</span><b>reads per query</b><span>the 2-bit part of every channel, then re-scores a shortlist</span><b>who decides</b><span>nobody; uniform depth</span><b>bits / token</b><span>2 × D = 256 for the scan</span></div>
+<p>The closest idea to ours: read fewer bits of each channel rather than fewer channels. <strong>On the toy (2 bits everywhere, 8 bits):</strong> head A <span class="mono">t3, t5</span> wrong, head B <span class="mono">t5, t3</span> wrong. Two bits is too coarse for channel 0, where the decisive spread lives, and two bits is wasted on channel 3, which never moves.</p>
+<p><strong>Where it breaks:</strong> the depth is the same for every channel and every query. Half of the bits go to channels that carry no score.</p>
+</div><div>
+<div class="bits"><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span class="b"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+<div class="legend">top 2 planes of every channel</div></div></div>
+</div>
+
+<div class="note">Not in the race: KIVI, KVQuant and TurboQuant compress the cache the winners are fetched from. They reduce the row bytes, not the scan, and combine with any method here.</div>
+
+<span class="snum">Step 4</span>
+<h2>What we do differently, in four moves</h2>
+
+<h3>Move 1. Rank channels by evidence, not by |q|</h3>
+<p>A channel's contribution to the score is <code>q<sub>j</sub> · k<sub>j</sub></code>. How much it can separate two keys depends on how much <code>k<sub>j</sub></code> varies across tokens as well as on <code>q<sub>j</sub></code>. We measure the variance of each channel once, on calibration text, and weight the query with it. Under grouped-query attention the heads that share this KV head are summed, so one plan serves the group and the read is never a union.</p>
+<div class="eq">g<sub>j</sub> = Σ<sub>heads in group</sub> q<sub>j</sub>² · Var(k<sub>j</sub>)</div>
+<p><strong>On the toy:</strong> g = [12.22, 3.77, 0.63, 0.00]. Channel 2 scores 0.63 despite head B's weight of -1.0, and channel 3 scores zero although both heads have a nonzero weight there. SparQ's |q| ranking for head B was [ch1, ch0, ch2, ch3]; evidence ranking is [ch0, ch1, ch2, ch3] for the whole group.</p>
+
+<h3>Move 2. Choose a depth per channel, not membership</h3>
+<p>Every method so far reads a channel at full precision or not at all. Quantization error shrinks by 4× for every extra bit, so the value of one more bit on a channel is proportional to <code>g<sub>j</sub> · 4<sup>-t</sup></code> where <code>t</code> is the depth it already has. The first bit on a strong channel is worth far more than the fourth; the fourth bit on a strong channel can be worth less than the first bit on a weak one. Handing out bits in order of marginal value is reverse water-filling, and it has a closed form: every channel gets depth</p>
+<div class="eq">t<sub>j</sub> = clip( round( log<sub>4</sub>( g<sub>j</sub> / θ ) ), 0, 4 )</div>
+<p>where θ is the single water line, found by bisection so that Σ t<sub>j</sub> hits this layer's bit budget. Channels below the line read nothing.</p>
+<div class="tw"><table>
+<tr><th>budget</th><th>depths ch 0..3</th><th>head A top-2</th><th>head B top-2</th><th>verdict</th></tr>
+<tr><td class="n">6 bits</td><td class="mono">3, 2, 1, 0</td><td class="mono">t3, t0</td><td class="mono">t5, t3</td><td><span class="ok">A right</span> · <span class="no">B wrong</span></td></tr>
+<tr class="hi"><td class="n">8 bits</td><td class="mono">4, 3, 1, 0</td><td class="mono">t0, t3</td><td class="mono">t5, t0</td><td><span class="ok">both right</span></td></tr>
+</table></div>
+<p class="cap">At 8 bits per token, the same budget Loki, Double Sparsity and the thumbnail had, ours is the only one that gets head B right, because a single bit of channel 2 is enough to separate t0 from t3, and the budget could afford it once channel 3 was dropped.</p>
+<div class="grid2"><div>
+<div class="bits"><span class="on"></span><span class="on"></span><span class="on"></span><span></span><span class="on"></span><span class="on"></span><span></span><span></span><span class="on"></span><span class="on"></span><span></span><span></span><span class="on"></span><span></span><span></span><span></span></div>
+<div class="legend">ours at 8 bits: a staircase, depths 4 · 3 · 1 · 0</div></div>
+<div><p class="cap">Compare the shapes in Step 3: the competitors read whole columns (channel picks) or whole rows (uniform depth). We read a staircase. On real 128-channel keys the staircase at mean 48 bits typically reads about 30 channels at 1 to 4 planes each.</p></div></div>
+
+<h3>Move 3. Store the K cache so a staircase is a contiguous read</h3>
+<p>Reading "the first t bits of channel j for all tokens" is only cheap if those bits sit next to each other in memory. So the 4-bit K cache is stored <em>channel-major in bit planes</em>: for each block of 64 tokens and each channel, the 64 most-significant bits form one 8-byte word, the next bits the next word, and so on. Codes are offset-binary mid-rise, so the first t planes of the 4-bit code are exactly the t-bit quantizer with the same scale; no second copy at lower precision is needed.</p>
+<svg viewBox="0 0 720 150" width="100%" role="img" aria-label="bit-plane layout">
+<rect x="20" y="20" width="680" height="110" fill="none" stroke="var(--rule)"/>
+<text x="30" y="14" font-size="12" fill="var(--mute)">one channel, one block of 64 tokens: four 8-byte words, most-significant plane first</text>
+<g font-size="12">
+<rect x="40" y="40" width="150" height="30" fill="var(--cell-on)"/><text x="115" y="60" text-anchor="middle" fill="#fff">plane 0 (MSB)</text>
+<rect x="200" y="40" width="150" height="30" fill="var(--cell-on)"/><text x="275" y="60" text-anchor="middle" fill="#fff">plane 1</text>
+<rect x="360" y="40" width="150" height="30" fill="var(--cell)"/><text x="435" y="60" text-anchor="middle">plane 2</text>
+<rect x="520" y="40" width="150" height="30" fill="var(--cell)"/><text x="595" y="60" text-anchor="middle">plane 3 (LSB)</text>
+<text x="40" y="95" fill="var(--mute)">depth t = 2 reads the first 16 contiguous bytes; t = 4 reads all 32. Nothing is skipped inside the read, nothing is duplicated.</text>
+<text x="40" y="118" fill="var(--mute)">In the offload store the whole sequence is one superblock, so a channel's planes form a single run of n/8 bytes per plane.</text>
+</g></svg>
+<p>Two consequences. There is <strong>no separate index</strong>: the scan reads a prefix of the K cache itself, so the 16.5 bytes per token of Double Sparsity's label cache and the 32 bytes per token of a landmark index do not exist. And a prefix read <strong>is a contiguous run</strong>, which is what makes the bytes turn into time on PCIe (Step 6).</p>
+
+<h3>Move 4. Budgets per layer, and the basis rule</h3>
+<p>Layers differ: early layers need 96 to 128 bits to keep their error down, late layers are fine at 24 to 32. A greedy allocation on calibration text hands out a fixed mean (48 or 64) across layers. It roughly halves the error on the QK-norm models (Qwen3) and is neutral or slightly worse on the Qwen2.5 models, and a plan calibrated at one context length does not transfer to another, so the flat budget is the default and the plan is a tuning step.</p>
+<p>The channel-wise plan assumes score variance is concentrated in raw channels. That holds for QK-normed models (Qwen3). For models without QK-norm (Llama-3.1, Qwen2.5) the variance is spread out, and rotating the keys into their principal basis first, then storing those coordinates in bit planes, restores the concentration. Same water-filling, same layout, one extra offline rotation. Unlike Loki, nothing is truncated: all 128 rotated coordinates are stored, and the query decides how deep to read each.</p>
+<div class="tw"><table>
+<tr><th>model, context, K</th><th class="n">raw channels, 74 bits</th><th class="n">rotated planes, 74 bits</th><th class="n">Double Sparsity, 136 bits</th><th class="n">SparQ r32, 136 bits</th></tr>
+<tr><td>Qwen3-8B, 16k, K=256</td><td class="n">0.0024</td><td class="n">0.0064</td><td class="n">0.0037</td><td class="n">0.0022</td></tr>
+<tr><td>Llama-3.1-8B, 4k, K=128</td><td class="n">0.0012</td><td class="n">0.0004</td><td class="n">0.0015</td><td class="n">0.0016</td></tr>
+<tr><td>Qwen2.5-7B, 32k, K=512</td><td class="n">0.0043</td><td class="n">0.0025</td><td class="n">0.0043</td><td class="n">0.0025</td></tr>
+<tr><td>Qwen2.5-7B-1M, 32k, K=512</td><td class="n">0.0038</td><td class="n">0.0019</td><td class="n">0.0042</td><td class="n">0.0020</td></tr>
+<tr><td>Qwen2.5-7B-1M, 128k, K=2048</td><td class="n">0.0013</td><td class="n">0.0006</td><td class="n">0.0024</td><td class="n">0.0011</td></tr>
+</table></div>
+<p class="cap">Attention-output relative error, lower is better. On the three models without QK-norm the rotation lowers error at equal bits; on Qwen3-8B, which has QK-norm, it raises it.</p>
+
+<span class="snum">Step 5</span>
+<h2>The toy scoreboard</h2>
+<div class="tw"><table>
+<tr><th>method</th><th>who decides</th><th>granularity</th><th class="n">bits/token</th><th>head A</th><th>head B</th></tr>
+<tr><td>full 4-bit scan</td><td>nobody</td><td>everything</td><td class="n">16</td><td class="ok">right</td><td class="ok">right</td></tr>
+<tr><td>Loki r=2</td><td>offline</td><td>rotated directions</td><td class="n">8</td><td class="ok">right</td><td class="no">wrong</td></tr>
+<tr><td>Double Sparsity c=2</td><td>offline</td><td>channels</td><td class="n">8</td><td class="ok">right</td><td class="no">wrong</td></tr>
+<tr><td>SparQ r=2</td><td>query, per KV head</td><td>channels</td><td class="n">8</td><td class="ok">right</td><td class="no">wrong</td></tr>
+<tr><td>block landmarks b=2</td><td>query</td><td>blocks of tokens</td><td class="n">32</td><td class="no">1 of 2</td><td class="no">1 of 2</td></tr>
+<tr><td>2-bit thumbnail</td><td>nobody</td><td>uniform depth</td><td class="n">8</td><td class="no">wrong</td><td class="no">wrong</td></tr>
+<tr class="hi"><td>ours</td><td>query, per group</td><td>depth per channel</td><td class="n">8</td><td class="ok">right</td><td class="ok">right</td></tr>
+</table></div>
+<p class="cap">A toy is a toy: six keys cannot show statistics. It shows the mechanism. The measured version of this table is Step 6.</p>
+
+<span class="snum">Step 6</span>
+<h2>What the measurements say</h2>
+<h3>Bits at equal error</h3>
+<div class="tw"><table>
+<tr><th>model, context, K</th><th class="n">ours, bits to match Double Sparsity (136 b)</th><th class="n">ours, bits to match SparQ r32 (136 b)</th><th class="n">SparQ r16 (68 b) error vs ours at 56 b</th></tr>
+<tr><td>Qwen3-8B, 16k, K=256</td><td class="n">47 (per-layer)</td><td class="n">56 (per-layer)</td><td class="n">0.0077 vs 0.0021</td></tr>
+<tr><td>Qwen3-8B, 32k, K=512</td><td class="n">74 (flat)</td><td class="n">92 (flat)</td><td class="n">0.0080 vs 0.0074</td></tr>
+<tr><td>Qwen3-4B, 16k, K=256</td><td class="n">46 (per-layer)</td><td class="n">56 (per-layer)</td><td class="n">0.0071 vs 0.0019</td></tr>
+<tr><td>Llama-3.1-8B, 4k, K=128, rotated</td><td class="n">47 (flat)</td><td class="n">38 (per-layer)</td><td class="n">0.0044 vs 0.0009</td></tr>
+<tr><td>Qwen2.5-7B, 32k, K=512, rotated</td><td class="n">74 (flat)</td><td class="n">74 (flat)</td><td class="n">0.0090 vs 0.0044</td></tr>
+<tr><td>Qwen2.5-7B-1M, 32k, K=512, rotated</td><td class="n">56 (flat)</td><td class="n">74 (flat)</td><td class="n">0.0091 vs 0.0038</td></tr>
+<tr><td>Qwen2.5-7B-1M, 128k, K=2048, rotated</td><td class="n">47 (flat)</td><td class="n">56 (per-layer)</td><td class="n">0.0055 vs 0.0011</td></tr>
+</table></div>
+<p class="cap">Held-out attention-output error; "flat" or "per-layer" is the cheaper plan that reaches the target. At 128k with K=128, a 0.1% selection ratio, every scan's error rises by an order of magnitude; at the same ratio as the 32k runs the crossings are where they are at 32k.</p>
+
+<h3>Downstream: RULER-style tasks</h3>
+<p>Dense prefill, then greedy decoding with each scan choosing the top-k from the same cache. Score is the fraction of gold strings the model produces.</p>
+<div class="tw"><table>
+<tr><th>method</th><th class="n">bits</th><th class="n">Qwen3-8B, 32k, K=128 (6 tasks)</th><th class="n">Qwen2.5-7B-1M, 128k, K=128 (4 tasks)</th></tr>
+<tr><td>dense attention</td><td class="n">full</td><td class="n">0.884</td><td class="n">0.677</td></tr>
+<tr><td>exact top-k oracle</td><td class="n">—</td><td class="n">0.874</td><td class="n">0.660</td></tr>
+<tr class="hi"><td>ours 48 (raw)</td><td class="n">56</td><td class="n">0.881</td><td class="n">—</td></tr>
+<tr class="hi"><td>ours 64 (raw)</td><td class="n">74</td><td class="n">0.878</td><td class="n">—</td></tr>
+<tr class="hi"><td>ours 48 (rotated)</td><td class="n">56</td><td class="n">—</td><td class="n">0.671</td></tr>
+<tr class="hi"><td>ours 64 (rotated)</td><td class="n">74</td><td class="n">—</td><td class="n">0.676</td></tr>
+<tr><td>Double Sparsity</td><td class="n">136</td><td class="n">0.880</td><td class="n">0.655</td></tr>
+<tr><td>SparQ r16</td><td class="n">68</td><td class="n">0.882</td><td class="n">0.644</td></tr>
+<tr><td>SparQ r32</td><td class="n">136</td><td class="n">0.881</td><td class="n">0.640</td></tr>
+<tr><td>Loki r64</td><td class="n">272</td><td class="n">0.882</td><td class="n">0.655</td></tr>
+<tr><td>2-bit thumbnail</td><td class="n">288</td><td class="n">0.877</td><td class="n">0.685</td></tr>
+<tr class="bad"><td>block landmarks b=8</td><td class="n">256</td><td class="n">0.831</td><td class="n">0.531</td></tr>
+</table></div>
+<p class="cap">At 32k (40 samples per task, standard error about 0.014) every per-token scan is within 0.008 of the exact top-k oracle; block landmarks lose 0.043. At 128k (20 samples per task, standard error about 0.033) every per-token scan is within 0.025 of the exact top-k oracle; block landmarks lose 0.130. Differences between per-token scans are inside the noise; what separates methods is bytes.</p>
+
+<h3>Real agent sessions</h3>
+<p>40 sessions of about 95k tokens built from recorded OpenHands coding-agent trajectories on one repository each (Qwen2.5-7B-Instruct-1M). Each scan decodes the agent's next step from the same cache. The baseline is exact top-k decoding with the same k, which is what every scan is built to reproduce; the score is step agreement, the word-level sequence-match ratio between a method's step and the exact top-k step.</p>
+<div class="tw"><table>
+<tr><th>method</th><th class="n">k=512, step agreement with exact top-k</th><th class="n">k=2048</th></tr>
+<tr class="hi"><td>Fathom 48 (56 b)</td><td class="n">0.53</td><td class="n">0.67</td></tr>
+<tr class="hi"><td>Fathom 64 (74 b)</td><td class="n">0.54</td><td class="n">—</td></tr>
+<tr class="hi"><td>Fathom 80 (92 b)</td><td class="n">0.60</td><td class="n">—</td></tr>
+<tr><td>SparQ r16 (68 b)</td><td class="n">0.49</td><td class="n">0.49</td></tr>
+<tr><td>SparQ r32 (136 b)</td><td class="n">0.60</td><td class="n">—</td></tr>
+<tr><td>Double Sparsity (136 b)</td><td class="n">0.55</td><td class="n">—</td></tr>
+<tr class="bad"><td>block landmarks b=8</td><td class="n">0.42</td><td class="n">0.47</td></tr>
+</table></div>
+<p class="cap">At a 2% budget Fathom agrees with the exact top-k step at 0.67 against 0.49 for SparQ r16 (paired margin +0.18 ± 0.05 over 20 sessions), at 18% fewer bytes and the same GPU time; at 0.5% the most accurate scan is SparQ r32 at 136 bits (0.60), Fathom reaches the same agreement at 92 bits (0.60, paired -0.00 ± 0.04), and the landmark index is below all of them. Calibrating Fathom on agent transcripts or on the session's own keys instead of Wikitext moves step agreement by +0.01 to +0.07, within 1.5 s.e.; the ordering against SparQ r32 is set by the byte budget.</p>
+<h3>When bytes become time</h3>
+<p>Fewer bytes are only faster when bytes are what the hardware is waiting for. Three measured regimes:</p>
+<div class="tw"><table>
+<tr><th>regime</th><th>what binds</th><th>measured</th></tr>
+<tr><td>KV and index in GPU memory</td><td>arithmetic per scanned bit (on the A100 the planes kernel reaches 75–106 GB/s of HBM bandwidth, the 4-bit channel scans 148–245)</td><td>the scan kernel itself is 1.4× slower than the 32-channel scan while reading 40% fewer bytes; the scan is 16–24% of sparse attention, so the step lands within a few percent</td></tr>
+<tr><td>KV rows in host memory, every index kept in GPU memory</td><td>the shared row fetch</td><td>all sparse methods tie at 44–55 ms/step of GPU time at 128k (A100, real prefill)</td></tr>
+<tr class="hi"><td>KV rows and index in host memory (long contexts, many sessions)</td><td>PCIe bytes</td><td>GPU time per step at 1M (A100): Fathom 40 and 48 versus SparQ r16, the 32-channel scan, landmarks and the thumbnail as in the paper; at 56 bits Fathom is 1.67× faster than the 136-bit scans and ties SparQ r16 at 1.1–5.3× lower error; at 47 bits it reads 31% fewer bytes than SparQ r16 and SparQ takes 1.11× its GPU time</td></tr>
+</table></div>
+<p>One more thing the offload runs taught: access pattern matters as much as bytes. Copying each active channel's planes as one contiguous run into GPU memory moves 25–26 GB/s at every run size from 4 KB to 512 KB, the same as a plain memcpy of the same bytes; issuing one copy call per run manages 0.4 GB/s at 4 KB runs (23 µs of issue cost per call). The bit-plane layout makes the contiguous run possible; the landmark index gets it for free but moves four times the bytes.</p>
+
+<span class="snum">Step 7</span>
+<h2>Where it does not help</h2>
+<div class="warn">If the KV cache and the scan index both live in GPU memory, this method is not faster. The scan is 16 to 24% of sparse attention there, and unpacking bit planes costs more arithmetic per bit than unpacking nibbles. Reading half the bytes buys nothing when arithmetic, not bandwidth, is the bottleneck.</div>
+<div class="warn">No per-token scan separates from another on downstream tasks at k ≥ 64; the differences live in the attention-error proxy and in bytes. The methods that do lose downstream are the block-granular ones.</div>
+<div class="warn">Timing beyond 128k used synthetic KV contents (calibration keys tiled, random values) because no model here prefills a million tokens. The plans, transfers and kernels are real; the attention outputs are not meaningful.</div>
+
+<span class="snum">Step 8</span>
+<h2>One paragraph, if you keep one thing</h2>
+<div class="good">Everyone scans a summary of every key to pick the top k. Loki and Double Sparsity pick <em>which</em> coordinates to keep once, offline. SparQ lets the query pick which channels, all-or-nothing, per head. Landmarks pick which blocks. Thumbnails read every channel to the same shallow depth. We let the query decide <em>how many bits</em> of each channel to read, weighted by that channel's evidence for the whole head group, and we store the 4-bit K cache in bit planes so that reading the first t bits of a channel is one contiguous read of the cache itself, with no second index. Same top-k as the exact oracle at 64 to 80 bits per token; 1.4 to 2.6× faster decode when the cache lives in host memory; nothing gained when it does not.</div>
+
+<div class="foot">Numbers on this page are from the project's own runs on one A100-SXM4-80GB pod (fidelity, RULER-style tasks, all timing, kernel and PCIe benches), plus Llama-3.1-8B activations captured on an L4 and evaluated with the same code. The tables are generated from the result files by the same script as the paper's. The toy in Steps 2 to 5 is computed with the same quantizer and water-filling code as the experiments. Landmark selection is our simplified reimplementation of the Quest / ShadowKV idea, not their code.</div>
+</div>

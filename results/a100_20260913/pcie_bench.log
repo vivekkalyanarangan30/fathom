@@ -1,0 +1,32 @@
+run      4 KB x  4096 contiguous           CH=4096 warps=4:   23.9 GB/s
+run      4 KB x  4096 contiguous           CH=2048 warps=4:   25.1 GB/s
+run      4 KB x  4096 contiguous           CH=8192 warps=8:   23.7 GB/s
+run      4 KB x  4096 scattered(4x stride) CH=4096 warps=4:   25.8 GB/s
+run      4 KB x  4096 scattered(4x stride) CH=2048 warps=4:   25.8 GB/s
+run      4 KB x  4096 scattered(4x stride) CH=8192 warps=8:   25.0 GB/s
+run      4 KB  one cudaMemcpyAsync of 4 MB:   21.6 GB/s
+run      4 KB  256 separate copy_ calls:    0.4 GB/s (11 us/copy)
+run     32 KB x  4096 contiguous           CH=4096 warps=4:   25.8 GB/s
+run     32 KB x  4096 contiguous           CH=2048 warps=4:   26.2 GB/s
+run     32 KB x  4096 contiguous           CH=8192 warps=8:   25.9 GB/s
+run     32 KB x  4096 scattered(4x stride) CH=4096 warps=4:   26.1 GB/s
+run     32 KB x  4096 scattered(4x stride) CH=2048 warps=4:   25.7 GB/s
+run     32 KB x  4096 scattered(4x stride) CH=8192 warps=8:   26.2 GB/s
+run     32 KB  one cudaMemcpyAsync of 34 MB:   24.4 GB/s
+run     32 KB  256 separate copy_ calls:    2.9 GB/s (11 us/copy)
+run    128 KB x  4096 contiguous           CH=4096 warps=4:   26.1 GB/s
+run    128 KB x  4096 contiguous           CH=2048 warps=4:   26.1 GB/s
+run    128 KB x  4096 contiguous           CH=8192 warps=8:   26.0 GB/s
+run    128 KB x  1024 scattered(4x stride) CH=4096 warps=4:   26.1 GB/s
+run    128 KB x  1024 scattered(4x stride) CH=2048 warps=4:   26.0 GB/s
+run    128 KB x  1024 scattered(4x stride) CH=8192 warps=8:   26.1 GB/s
+run    128 KB  one cudaMemcpyAsync of 134 MB:   25.9 GB/s
+run    128 KB  256 separate copy_ calls:   11.4 GB/s (11 us/copy)
+run    512 KB x  1024 contiguous           CH=4096 warps=4:   26.1 GB/s
+run    512 KB x  1024 contiguous           CH=2048 warps=4:   26.1 GB/s
+run    512 KB x  1024 contiguous           CH=8192 warps=8:   26.1 GB/s
+run    512 KB x   256 scattered(4x stride) CH=4096 warps=4:   26.2 GB/s
+run    512 KB x   256 scattered(4x stride) CH=2048 warps=4:   26.0 GB/s
+run    512 KB x   256 scattered(4x stride) CH=8192 warps=8:   26.2 GB/s
+run    512 KB  one cudaMemcpyAsync of 134 MB:   25.9 GB/s
+run    512 KB  256 separate copy_ calls:   22.4 GB/s (23 us/copy)

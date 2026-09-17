@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or these results, please cite the paper."
+title: "Fathom: Per-Query Read Depth for Sparse Decoding over Offloaded KV Caches"
+authors:
+  - family-names: Kalyanarangan
+    given-names: Vivek
+date-released: 2026-09-15
+url: "https://arxiv.org/abs/2609.17652"
+preferred-citation:
+  type: article
+  title: "Fathom: Per-Query Read Depth for Sparse Decoding over Offloaded KV Caches"
+  authors:
+    - family-names: Kalyanarangan
+      given-names: Vivek
+  journal: "arXiv preprint arXiv:2609.17652"
+  year: 2026
+  url: "https://arxiv.org/abs/2609.17652"

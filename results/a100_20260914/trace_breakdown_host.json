@@ -1,0 +1,250 @@
+{
+ "chan4_r16@1048576x1": {
+  "other": 18.83426899999998,
+  "top-k": 36.098268999999995,
+  "row fetch": 15.316422,
+  "weights and attention GEMMs": 9.781008999999994,
+  "scan transfer": 95.841857,
+  "scan kernel": 10.573453,
+  "total": 186.44527899999997
+ },
+ "chan4_r32@1048576x1": {
+  "other": 18.949927999999936,
+  "scan transfer": 196.54887599999998,
+  "scan kernel": 19.915522,
+  "top-k": 36.033462000000014,
+  "row fetch": 14.82042,
+  "weights and attention GEMMs": 9.800016999999999,
+  "total": 296.0682249999999
+ },
+ "landmark8@1048576x1": {
+  "other": 39.944935999999856,
+  "scan transfer": 359.229476,
+  "weights and attention GEMMs": 29.25130399999999,
+  "top-k": 6.500974000000013,
+  "row fetch": 9.011364999999994,
+  "total": 443.93805499999985
+ },
+ "planes_mean40@1048576x1": {
+  "other": 19.433170999999952,
+  "weights and attention GEMMs": 9.807915000000005,
+  "scan kernel": 19.22257100000001,
+  "scan transfer": 68.41513300000001,
+  "top-k": 35.538065,
+  "row fetch": 15.278385000000005,
+  "total": 167.69523999999998
+ },
+ "planes_mean48@1048576x1": {
+  "other": 19.113846000000006,
+  "row fetch": 14.726285000000004,
+  "weights and attention GEMMs": 9.790196,
+  "scan kernel": 20.972684000000008,
+  "scan transfer": 78.09423900000003,
+  "top-k": 34.534936000000016,
+  "total": 177.23218600000007
+ },
+ "planes_mean64@1048576x1": {
+  "other": 19.30621900000002,
+  "scan kernel": 26.961222000000017,
+  "scan transfer": 107.298505,
+  "top-k": 35.55074000000004,
+  "row fetch": 16.038155000000003,
+  "weights and attention GEMMs": 9.785270000000004,
+  "total": 214.9401110000001
+ },
+ "planes_thumb2@1048576x1": {
+  "top-k": 35.10553799999999,
+  "other": 19.210479999999976,
+  "row fetch": 16.868328000000005,
+  "weights and attention GEMMs": 9.791174000000005,
+  "scan kernel": 66.80636000000004,
+  "scan transfer": 405.7367490000001,
+  "total": 553.5186290000001
+ },
+ "chan4_r16@262144x1": {
+  "other": 19.085003000000064,
+  "weights and attention GEMMs": 9.812786999999997,
+  "top-k": 13.213497999999989,
+  "scan transfer": 25.06161800000001,
+  "scan kernel": 2.799725,
+  "row fetch": 7.992963999999998,
+  "total": 77.96559500000006
+ },
+ "chan4_r32@262144x1": {
+  "other": 19.13804900000004,
+  "weights and attention GEMMs": 9.822184,
+  "top-k": 13.187844000000009,
+  "scan transfer": 49.60770700000001,
+  "scan kernel": 5.303097999999999,
+  "row fetch": 8.233671,
+  "total": 105.29255300000005
+ },
+ "landmark8@262144x1": {
+  "other": 22.858763999999955,
+  "weights and attention GEMMs": 15.27884999999999,
+  "scan transfer": 92.35455900000002,
+  "top-k": 4.62767100000001,
+  "row fetch": 8.782215,
+  "total": 143.90205899999998
+ },
+ "planes_mean40@262144x1": {
+  "other": 19.403273000000052,
+  "weights and attention GEMMs": 9.820492999999997,
+  "scan kernel": 5.183731999999999,
+  "scan transfer": 17.55608600000001,
+  "top-k": 12.71205799999999,
+  "row fetch": 7.953284999999998,
+  "total": 72.62892700000005
+ },
+ "planes_mean48@262144x1": {
+  "weights and attention GEMMs": 9.819434000000003,
+  "other": 19.424645000000062,
+  "scan kernel": 5.866554999999997,
+  "scan transfer": 20.938776999999998,
+  "top-k": 12.75112999999999,
+  "row fetch": 7.948160999999999,
+  "total": 76.74870200000005
+ },
+ "planes_mean64@262144x1": {
+  "other": 19.404562000000002,
+  "weights and attention GEMMs": 9.808450999999998,
+  "scan kernel": 7.1711999999999945,
+  "scan transfer": 27.321564000000013,
+  "top-k": 12.764772999999995,
+  "row fetch": 8.417195,
+  "total": 84.887745
+ },
+ "planes_thumb2@262144x1": {
+  "other": 19.600947000000048,
+  "weights and attention GEMMs": 9.812698000000008,
+  "scan kernel": 18.70866199999999,
+  "scan transfer": 104.77476800000004,
+  "top-k": 12.770937999999992,
+  "row fetch": 8.931082,
+  "total": 174.59909500000006
+ },
+ "chan4_r16@32768x1": {
+  "other": 18.896071000000056,
+  "weights and attention GEMMs": 9.817206999999994,
+  "top-k": 5.578170999999993,
+  "scan transfer": 3.7538060000000004,
+  "scan kernel": 0.472195,
+  "row fetch": 7.159875,
+  "total": 45.677325000000046
+ },
+ "chan4_r32@32768x1": {
+  "other": 18.866053999999963,
+  "weights and attention GEMMs": 9.828700999999992,
+  "top-k": 5.604549000000011,
+  "scan transfer": 6.727674000000002,
+  "scan kernel": 0.7639130000000002,
+  "row fetch": 6.998589999999996,
+  "total": 48.78948099999997
+ },
+ "landmark8@32768x1": {
+  "other": 17.14295500000003,
+  "weights and attention GEMMs": 10.541681999999998,
+  "scan transfer": 11.686835000000002,
+  "top-k": 3.052336,
+  "row fetch": 7.521921000000002,
+  "total": 49.94572900000003
+ },
+ "planes_mean40@32768x1": {
+  "other": 19.3607490000002,
+  "weights and attention GEMMs": 9.802540000000002,
+  "scan kernel": 1.3396179999999998,
+  "scan transfer": 2.7633390000000007,
+  "top-k": 5.0931610000000065,
+  "row fetch": 7.964875000000003,
+  "total": 46.32428200000021
+ },
+ "planes_mean48@32768x1": {
+  "other": 19.269412000000088,
+  "weights and attention GEMMs": 9.829453999999995,
+  "scan kernel": 1.44938,
+  "scan transfer": 3.2410340000000004,
+  "top-k": 5.093712000000002,
+  "row fetch": 8.130313999999998,
+  "total": 47.013306000000085
+ },
+ "planes_mean64@32768x1": {
+  "other": 19.265208000000044,
+  "weights and attention GEMMs": 9.811112999999997,
+  "scan kernel": 1.6835650000000009,
+  "scan transfer": 4.0386099999999985,
+  "top-k": 5.0724,
+  "row fetch": 8.000039,
+  "total": 47.87093500000004
+ },
+ "planes_thumb2@32768x1": {
+  "other": 19.35435100000006,
+  "weights and attention GEMMs": 9.827349000000002,
+  "scan kernel": 3.3136820000000022,
+  "scan transfer": 13.807584000000004,
+  "top-k": 5.0759709999999965,
+  "row fetch": 7.825538999999999,
+  "total": 59.204476000000064
+ },
+ "chan4_r16@524288x1": {
+  "other": 19.071021999999985,
+  "top-k": 23.07216999999999,
+  "scan transfer": 49.58224199999999,
+  "scan kernel": 5.608280999999998,
+  "row fetch": 8.324193999999999,
+  "weights and attention GEMMs": 9.777162000000004,
+  "total": 115.43507099999997
+ },
+ "chan4_r32@524288x1": {
+  "other": 19.15761899999999,
+  "weights and attention GEMMs": 9.819333000000004,
+  "top-k": 23.020382999999967,
+  "scan transfer": 98.74690299999997,
+  "scan kernel": 10.258792,
+  "row fetch": 9.364876999999998,
+  "total": 170.36790699999995
+ },
+ "landmark8@524288x1": {
+  "top-k": 5.254394999999999,
+  "other": 28.429755999999866,
+  "row fetch": 9.069253000000002,
+  "weights and attention GEMMs": 19.884642,
+  "scan transfer": 179.44210599999997,
+  "total": 242.08015199999983
+ },
+ "planes_mean40@524288x1": {
+  "other": 19.301488000000067,
+  "scan kernel": 9.769391999999996,
+  "scan transfer": 34.16487299999999,
+  "top-k": 22.600513999999947,
+  "row fetch": 10.247891,
+  "weights and attention GEMMs": 9.781165,
+  "total": 105.865323
+ },
+ "planes_mean48@524288x1": {
+  "other": 19.35389500000002,
+  "scan kernel": 11.022168999999996,
+  "scan transfer": 40.698226999999996,
+  "top-k": 22.592165999999946,
+  "row fetch": 9.918964,
+  "weights and attention GEMMs": 9.780599000000004,
+  "total": 113.36601999999996
+ },
+ "planes_mean64@524288x1": {
+  "other": 19.297563000000032,
+  "scan kernel": 13.787176000000004,
+  "scan transfer": 53.980494,
+  "top-k": 22.584367999999966,
+  "row fetch": 10.588084999999996,
+  "weights and attention GEMMs": 9.788341999999998,
+  "total": 130.026028
+ },
+ "planes_thumb2@524288x1": {
+  "other": 19.409661999999987,
+  "scan kernel": 35.06631899999999,
+  "scan transfer": 208.28160600000004,
+  "top-k": 22.49562399999997,
+  "row fetch": 11.156471999999999,
+  "weights and attention GEMMs": 9.790766999999995,
+  "total": 306.20045
+ }
+}

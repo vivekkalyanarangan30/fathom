@@ -1,0 +1,60 @@
+[
+ {
+  "model": "Qwen/Qwen3-8B",
+  "w4": false,
+  "index_hbm": false,
+  "copy_index": true,
+  "synthetic_kv": true,
+  "ctx": 32768,
+  "batch": 1,
+  "method": "planes_mean48",
+  "k": 512,
+  "step_ms": 367.4533781595528,
+  "attn_ms": 241.44937467575073,
+  "tok_per_s": 2.7214336823045553,
+  "step_gpu_ms": 55.19382600000121,
+  "step_gpu_ms_std": 0.0,
+  "step_gpu_ms_all": [
+   55.19382600000121
+  ],
+  "tok_per_s_gpu": 18.1179684843732,
+  "pcie_GB_per_step": 0.26514944,
+  "scan_MB_per_step": 66.914304,
+  "rows_MB_per_step": 198.235136,
+  "pcie_GBps_effective": 1.0981574930814244,
+  "prefill_s": 0.00021219253540039062,
+  "offload_s": 81.89944767951965,
+  "host_kv_GB": 4.831838208,
+  "weight_GB": 16.38147072,
+  "peak_gpu_GB": 18.013206016
+ },
+ {
+  "model": "Qwen/Qwen3-8B",
+  "w4": false,
+  "index_hbm": false,
+  "copy_index": true,
+  "synthetic_kv": true,
+  "ctx": 32768,
+  "batch": 1,
+  "method": "chan4_r32",
+  "k": 512,
+  "step_ms": 963.8315648771822,
+  "attn_ms": 471.74579405784607,
+  "tok_per_s": 1.0375256802545438,
+  "step_gpu_ms": 58.84011700000323,
+  "step_gpu_ms_std": 0.0,
+  "step_gpu_ms_all": [
+   58.84011700000323
+  ],
+  "tok_per_s_gpu": 16.995207538420516,
+  "pcie_GB_per_step": 0.351176704,
+  "scan_MB_per_step": 160.432128,
+  "rows_MB_per_step": 190.744576,
+  "pcie_GBps_effective": 0.7444193640376966,
+  "prefill_s": 0.00010561943054199219,
+  "offload_s": 72.48979139328003,
+  "host_kv_GB": 4.831838208,
+  "weight_GB": 16.38147072,
+  "peak_gpu_GB": 17.756742656
+ }
+]

@@ -1,0 +1,15 @@
+\begin{tabular}{lrrrrrr}
+\toprule
+ & \multicolumn{3}{c}{index in host memory} & \multicolumn{3}{c}{index in HBM} \\
+method & 32k & 64k & 128k & 32k & 64k & 128k \\
+\midrule
+Fathom 40 & 47 & 49 & 56 & 43 & 44 & 47 \\
+Fathom 48 & 47 & 50 & 58 & 43 & 44 & 47 \\
+Fathom 64 & 48 & 52 & 62 & 44 & 45 & 48 \\
+SparQ $r{=}16$ & 46 & 50 & 58 & 42 & 43 & 45 \\
+32-channel scan & 50 & 57 & 73 & 43 & 44 & 47 \\
+block landmark & 51 & 64 & 89 & 39 & 42 & 44 \\
+2-bit thumbnail & 60 & 76 & 108 & 46 & 48 & 55 \\
+dense (all rows) & 216 & 411 & 804 & 215 & 413 & 807 \\
+\bottomrule
+\end{tabular}

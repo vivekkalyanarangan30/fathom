@@ -1,0 +1,14 @@
+\begin{tabular}{llrrrrrrr}
+\toprule
+ & & SparQ $r{=}16$ & \multicolumn{3}{c}{Fathom, mean 40 ($\approx$47 bits)} & \multicolumn{3}{c}{Fathom, mean 48 ($\approx$56 bits)} \\
+Model & ctx/$k$ & 68 bits & flat & per-layer & ratio & flat & per-layer & ratio \\
+\midrule
+Qwen3-8B & 16k/256 & 0.0077 & \textbf{0.0075} & \textbf{0.0033} & 2.3$\times$ & \textbf{0.0052} & \textbf{0.0021} & 3.7$\times$ \\
+Qwen3-8B & 32k/512 & 0.0080 & 0.0142 & 0.0091 & 0.9$\times$ & 0.0081 & \textbf{0.0074} & 1.1$\times$ \\
+Qwen3-4B & 16k/256 & 0.0071 & \textbf{0.0050} & \textbf{0.0027} & 2.7$\times$ & \textbf{0.0034} & \textbf{0.0019} & 3.8$\times$ \\
+Llama-3.1-8B & 4k/128 & 0.0044 & \textbf{0.0013} & \textbf{0.0012} & 3.8$\times$ & \textbf{0.0009} & \textbf{0.0010} & 4.9$\times$ \\
+Qwen2.5-7B & 32k/512 & 0.0090 & \textbf{0.0065} & 0.0096 & 1.4$\times$ & \textbf{0.0044} & \textbf{0.0063} & 2.0$\times$ \\
+Qwen2.5-7B-1M & 32k/512 & 0.0091 & \textbf{0.0052} & \textbf{0.0075} & 1.7$\times$ & \textbf{0.0038} & \textbf{0.0038} & 2.4$\times$ \\
+Qwen2.5-7B-1M & 128k/2048 & 0.0055 & \textbf{0.0019} & \textbf{0.0017} & 3.2$\times$ & \textbf{0.0013} & \textbf{0.0011} & 5.3$\times$ \\
+\bottomrule
+\end{tabular}

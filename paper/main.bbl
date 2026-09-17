@@ -1,0 +1,173 @@
+\begin{thebibliography}{10}
+
+\bibitem{gqa}
+Joshua Ainslie, James Lee-Thorp, Michiel de~Jong, Yury Zemlyanskiy, Federico
+  Lebr{\'o}n, and Sumit Sanghai.
+\newblock Gqa: Training generalized multi-query transformer models from
+  multi-head checkpoints.
+\newblock In {\em Conference on Empirical Methods in Natural Language
+  Processing (EMNLP)}, 2023.
+
+\bibitem{swerebench}
+Ibragim Badertdinov, Alexander Golubev, Maksim Nekrashevich, Anton Shevtsov,
+  Simon Karasik, Andrei Andriushchenko, Maria Trofimova, Daria Litvintseva, and
+  Boris Yangel.
+\newblock Swe-rebench: An automated pipeline for task collection and
+  decontaminated evaluation of software engineering agents.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2025.
+
+\bibitem{retroinfer}
+Yaoqi Chen, Jinkai Zhang, Baotong Lu, Qianxi Zhang, Chengruidong Zhang, Jing
+  Liu, Jingjia Luo, Di~Liu, Huiqiang Jiang, Qi~Chen, Bailu Ding, Xiao Yan,
+  Jiawei Jiang, Chen Chen, Mingxing Zhang, Cheng Li, Yuqing Yang, Fan Yang, and
+  Mao Yang.
+\newblock Retroinfer: A vector storage engine for scalable long-context llm
+  inference.
+\newblock {\em Proceedings of the VLDB Endowment}, 19(5):1016--1031, 2026.
+
+\bibitem{magicpig}
+Zhuoming Chen, Ranajoy Sadhukhan, Zihao Ye, Yang Zhou, Jianyu Zhang, Niklas
+  Nolte, Yuandong Tian, Matthijs Douze, L{\'e}on Bottou, Zhihao Jia, and Beidi
+  Chen.
+\newblock Magicpig: Lsh sampling for efficient llm generation.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2025.
+
+\bibitem{gershogray}
+Allen Gersho and Robert~M. Gray.
+\newblock {\em Vector Quantization and Signal Compression}.
+\newblock Kluwer Academic Publishers, 1992.
+
+\bibitem{kvquant}
+Coleman Hooper, Sehoon Kim, Hiva Mohammadzadeh, Michael~W. Mahoney,
+  Yakun~Sophia Shao, Kurt Keutzer, and Amir Gholami.
+\newblock Kvquant: Towards 10 million context length llm inference with kv
+  cache quantization.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2024.
+
+\bibitem{ruler}
+Cheng-Ping Hsieh, Simeng Sun, Samuel Kriman, Shantanu Acharya, Dima Rekesh, Fei
+  Jia, Yang Zhang, and Boris Ginsburg.
+\newblock Ruler: What's the real context size of your long-context language
+  models?
+\newblock In {\em Conference on Language Modeling (COLM)}, 2024.
+
+\bibitem{infinigen}
+Wonbeom Lee, Jungi Lee, Junghwan Seo, and Jaewoong Sim.
+\newblock Infinigen: Efficient generative inference of large language models
+  with dynamic kv cache management.
+\newblock In {\em USENIX Symposium on Operating Systems Design and
+  Implementation (OSDI)}, 2024.
+
+\bibitem{retrievalattention}
+Di~Liu, Meng Chen, Baotong Lu, Huiqiang Jiang, Zhenhua Han, Qianxi Zhang,
+  Qi~Chen, Chengruidong Zhang, Bailu Ding, Kai Zhang, Chen Chen, Fan Yang,
+  Yuqing Yang, and Lili Qiu.
+\newblock Retrievalattention: Accelerating long-context llm inference via
+  vector retrieval.
+\newblock {\em arXiv preprint arXiv:2409.10516}, 2024.
+
+\bibitem{ffd}
+Zhigeng Liu, Zhiyuan Ning, Ruixiao Li, Xiaoran Liu, Yuerong Song, Min Zhang,
+  Ziwei He, and Xipeng Qiu.
+\newblock Faster than flash: Exploiting attention sparsity for efficient
+  long-context decoding.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2026.
+
+\bibitem{kivi}
+Zirui Liu, Jiayi Yuan, Hongye Jin, Shaochen Zhong, Zhaozhuo Xu, Vladimir
+  Braverman, Beidi Chen, and Xia Hu.
+\newblock Kivi: A tuning-free asymmetric 2bit quantization for kv cache.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem{llama3}
+{Llama Team, AI @ Meta}.
+\newblock The llama 3 herd of models.
+\newblock {\em arXiv preprint arXiv:2407.21783}, 2024.
+
+\bibitem{anyprecision}
+Yeonhong Park, Jake Hyun, Sanglyul Cho, Bonggeun Sim, and Jae~W. Lee.
+\newblock Any-precision llm: Low-cost deployment of multiple, different-sized
+  llms.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem{qwen3}
+{Qwen Team}.
+\newblock Qwen3 technical report.
+\newblock {\em arXiv preprint arXiv:2505.09388}, 2025.
+
+\bibitem{sparq}
+Luka Ribar, Ivan Chelombiev, Luke Hudlass-Galley, Charlie Blake, Carlo Luschi,
+  and Douglas Orr.
+\newblock Sparq attention: Bandwidth-efficient llm inference.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem{loki}
+Prajwal Singhania, Siddharth Singh, Shwai He, Soheil Feizi, and Abhinav
+  Bhatele.
+\newblock Loki: Low-rank keys for efficient sparse attention.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2024.
+
+\bibitem{shadowkv}
+Hanshi Sun, Li-Wen Chang, Wenlei Bao, Size Zheng, Ningxin Zheng, Xin Liu, Harry
+  Dong, Yuejie Chi, and Beidi Chen.
+\newblock Shadowkv: Kv cache in shadows for high-throughput long-context llm
+  inference.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2025.
+
+\bibitem{quest}
+Jiaming Tang, Yilong Zhao, Kan Zhu, Guangxuan Xiao, Baris Kasikci, and Song
+  Han.
+\newblock Quest: Query-aware sparsity for efficient long-context llm inference.
+\newblock In {\em International Conference on Machine Learning (ICML)}, 2024.
+
+\bibitem{openhands}
+Xingyao Wang, Boxuan Li, Yufan Song, Frank~F. Xu, Xiangru Tang, Mingchen Zhuge,
+  Jiayi Pan, Yueqi Song, Bowen Li, Jaskirat Singh, Hoang~H. Tran, Fuqiang Li,
+  Ren Ma, Mingzhang Zheng, Bill Qian, Yanjun Shao, Niklas Muennighoff, Yizhe
+  Zhang, Binyuan Hui, Junyang Lin, Robert Brennan, Hao Peng, Heng Ji, and
+  Graham Neubig.
+\newblock Openhands: An open platform for ai software developers as generalist
+  agents.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2025.
+
+\bibitem{infllm}
+Chaojun Xiao, Pengle Zhang, Xu~Han, Guangxuan Xiao, Yankai Lin, Zhengyan Zhang,
+  Zhiyuan Liu, and Maosong Sun.
+\newblock Infllm: Training-free long-context extrapolation for llms with an
+  efficient context memory.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2024.
+
+\bibitem{streamingllm}
+Guangxuan Xiao, Yuandong Tian, Beidi Chen, Song Han, and Mike Lewis.
+\newblock Efficient streaming language models with attention sinks.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2024.
+
+\bibitem{doublesparsity}
+Shuo Yang, Ying Sheng, Joseph~E. Gonzalez, Ion Stoica, and Lianmin Zheng.
+\newblock Post-training sparse attention with double sparsity.
+\newblock {\em arXiv preprint arXiv:2408.07092}, 2024.
+
+\bibitem{turboquant}
+Amir Zandieh, Majid Daliri, Majid Hadian, and Vahab Mirrokni.
+\newblock Turboquant: Online vector quantization with near-optimal distortion
+  rate.
+\newblock In {\em International Conference on Learning Representations (ICLR)},
+  2026.
+
+\bibitem{h2o}
+Zhenyu Zhang, Ying Sheng, Tianyi Zhou, Tianlong Chen, Lianmin Zheng, Ruisi Cai,
+  Zhao Song, Yuandong Tian, Christopher R{\'e}, Clark Barrett, Zhangyang Wang,
+  and Beidi Chen.
+\newblock H$_2$o: Heavy-hitter oracle for efficient generative inference of
+  large language models.
+\newblock In {\em Advances in Neural Information Processing Systems (NeurIPS)},
+  2023.
+
+\end{thebibliography}

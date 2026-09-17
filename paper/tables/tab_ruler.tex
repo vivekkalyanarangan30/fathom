@@ -1,0 +1,19 @@
+\begin{tabular}{lrlrl}
+\toprule
+ & \multicolumn{2}{c}{Qwen3-8B 32k, $k{=}128$} & \multicolumn{2}{c}{Qwen2.5-7B-1M 128k, $k{=}128$} \\
+method & bits & score & bits & score \\
+\midrule
+dense & -- & 0.884 $\pm$ 0.015 & -- & 0.677 $\pm$ 0.033 \\
+exact top-$k$ oracle & -- & 0.874 $\pm$ 0.014 & -- & 0.660 $\pm$ 0.033 \\
+\textbf{Fathom 48} & 56 & 0.881 $\pm$ 0.014 & -- & -- \\
+\textbf{Fathom 64} & 74 & 0.878 $\pm$ 0.014 & -- & -- \\
+\textbf{Fathom KLT 48} & -- & -- & 56 & 0.671 $\pm$ 0.032 \\
+\textbf{Fathom KLT 64} & -- & -- & 74 & 0.676 $\pm$ 0.035 \\
+Double Sparsity $c{=}32$ & 136 & 0.880 $\pm$ 0.014 & 136 & 0.655 $\pm$ 0.034 \\
+SparQ $r{=}16$ & 68 & 0.882 $\pm$ 0.014 & 68 & 0.644 $\pm$ 0.034 \\
+SparQ $r{=}32$ & 136 & 0.881 $\pm$ 0.014 & 136 & 0.640 $\pm$ 0.034 \\
+Loki $r{=}64$ & 272 & 0.882 $\pm$ 0.014 & 272 & 0.655 $\pm$ 0.033 \\
+2-bit thumbnail & 288 & 0.877 $\pm$ 0.014 & 288 & 0.685 $\pm$ 0.035 \\
+block landmark & 256 & 0.831 $\pm$ 0.016 & 256 & 0.531 $\pm$ 0.038 \\
+\bottomrule
+\end{tabular}

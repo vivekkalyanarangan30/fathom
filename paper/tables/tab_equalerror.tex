@@ -1,0 +1,14 @@
+\begin{tabular}{llllrlllrll}
+\toprule
+ & & & \multicolumn{4}{c}{Double Sparsity $c{=}32$ (136 b)} & \multicolumn{4}{c}{SparQ $r{=}32$ (136 b)} \\
+Model & ctx/$k$ & basis & error & Fathom bits & Fathom error & plan & error & Fathom bits & Fathom error & plan \\
+\midrule
+Qwen3-8B & 16k/256 & raw & 0.0037 & \textbf{47} & 0.0033 & per-layer & 0.0022 & \textbf{56} & 0.0021 & per-layer \\
+Qwen3-8B & 32k/512 & raw & 0.0037 & \textbf{74} & 0.0024 & flat & 0.0012 & \textbf{92} & 0.0010 & flat \\
+Qwen3-4B & 16k/256 & raw & 0.0030 & \textbf{46} & 0.0027 & per-layer & 0.0022 & \textbf{56} & 0.0019 & per-layer \\
+Llama-3.1-8B & 4k/128 & KLT & 0.0015 & \textbf{47} & 0.0013 & flat & 0.0016 & \textbf{38} & 0.0015 & per-layer \\
+Qwen2.5-7B & 32k/512 & KLT & 0.0043 & \textbf{74} & 0.0025 & flat & 0.0025 & \textbf{74} & 0.0025 & flat \\
+Qwen2.5-7B-1M & 32k/512 & KLT & 0.0042 & \textbf{56} & 0.0038 & flat & 0.0020 & \textbf{74} & 0.0019 & flat \\
+Qwen2.5-7B-1M & 128k/2048 & KLT & 0.0024 & \textbf{47} & 0.0019 & flat & 0.0011 & \textbf{56} & 0.0011 & per-layer \\
+\bottomrule
+\end{tabular}
