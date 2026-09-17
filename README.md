@@ -3,7 +3,7 @@
 Code, measurements and paper source for
 
 > Vivek Kalyanarangan. **Fathom: Per-Query Read Depth for Sparse Decoding over Offloaded KV Caches.** arXiv:2609.17652, 2026.
-> [arxiv.org/abs/2609.17652](https://arxiv.org/abs/2609.17652) · [PDF](paper/main.pdf) · [plain-language explainer](docs/method.html)
+> [arxiv.org/abs/2609.17652](https://arxiv.org/abs/2609.17652) · [PDF](paper/main.pdf) · [plain-language explainer](https://vivekkalyanarangan30.github.io/fathom/)
 
 Fathom is a key scan for top-k sparse decoding when the KV cache and the index that ranks it live in host memory. The 4-bit K cache is stored channel-major as bit planes, so reading the first *t* planes of a channel is exactly that channel's *t*-bit quantizer, and each query decides per channel how many planes to read by reverse water-filling over its channel importances. Every number in the paper is produced from the JSON files in `results/` by `paper/make_tables.py` and `paper/make_figs.py`.
 
@@ -32,7 +32,7 @@ scripts/bench_scan_cfg.py, topk_bench.py  launch-config sweep and top-k variants
 chains/                  the shell chains that ran the experiments on RunPod A100 pods, in order, with resume-on-restart
 results/                 the JSON outputs those chains produced (a100_20260913 and a100_20260914 runs; results/l4 holds the Llama-3.1-8B fidelity run)
 paper/                   main.tex, macros.tex, refs.bib, tables/, figs/, and the two generators
-docs/method.html         the explainer, regenerated from the same JSONs by docs/update_method_html.py
+docs/index.html          the explainer, regenerated from the same JSONs by docs/update_method_html.py
 ```
 
 ## Paper section to code and data

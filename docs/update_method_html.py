@@ -1,9 +1,9 @@
-"""Rewrite the number-bearing parts of report/method.html from the same result JSONs the paper uses."""
+"""Rewrite the number-bearing parts of docs/index.html from the same result JSONs the paper uses."""
 import json, os, re, statistics, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, f"{ROOT}/paper")
 import make_tables as T
-P = f"{ROOT}/docs/method.html"
+P = f"{ROOT}/docs/index.html"
 s = open(P).read()
 def rep(old, new, cnt=1):
     global s
