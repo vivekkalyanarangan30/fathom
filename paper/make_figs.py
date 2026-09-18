@@ -6,9 +6,11 @@ import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle, Patch
 from matplotlib.lines import Line2D
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-R13 = f"{ROOT}/results/a100_20260913"
-LLAMA = f"{ROOT}/results/l4/final_alloc_Meta-Llama-3.1-8B_T4096_K128.json"
+ROOT = "/Users/vivekkalyanarangan/new_quant"
+L4 = f"{ROOT}/l4_results/final/results"
+R13 = f"{ROOT}/runpod_results/a100_20260913"
+R14 = f"{ROOT}/runpod_results/a100_20260914"
+LLAMA = f"{ROOT}/runpod/results/final_alloc_Meta-Llama-3.1-8B_T4096_K128.json"
 OUT = f"{ROOT}/paper/figs"
 os.makedirs(OUT, exist_ok=True)
 
@@ -20,6 +22,10 @@ SC, DC = 3.3, 6.8
 
 def load(p):
     return json.load(open(p))
+
+def pick(name):
+    """Newest run that has the file; the 14 Sep rerun adds the 40-bit budget."""
+    return f"{R14}/{name}" if os.path.exists(f"{R14}/{name}") else f"{R13}/{name}"
 
 def rows(d, prefix):
     """(bits, err) pairs for variants named prefix + budget, sorted by bits."""
@@ -117,16 +123,34 @@ def fig_ruler():
 # 5. offload ---------------------------------------------------------------------------------------------------------------
 OFF_STYLE = {"planes_mean48": ("Fathom 48", IND, "-o"), "planes_mean64": ("Fathom 64", IND2, "-o"), "chan4_r32": ("32-channel scan (SparQ r32 / DS / Loki bytes)", GREYS[0], "-s"),
              "chan4_r16": ("SparQ r16", ORANGE, "-D"), "landmark8": ("block landmark", RED, "-^"), "planes_thumb2": ("2-bit thumbnail", GREYS[2], "-v")}
-def fig_offload():
-    d = [r for r in load(f"{R13}/B_e2e_offload_synth_copyidx.json") if "method" in r and not r.get("oom")]
+MATCH_STYLE = {"planes_mean64": ("Fathom 64, 74 b", IND, "-o"), "chan4_r32": ("32-channel scan, 136 b (SparQ $r$=32 / DS / Loki)", GREYS[0], "-s"),
+               "landmark8": ("block landmark, 256 b", RED, "-^"), "planes_thumb2": ("2-bit thumbnail, 288 b", GREYS[2], "-v")}
+
+def offload_panels(d, style, order, name, ncol=3, logy=False):
+    """Two step-time panels against context. order fixes which of GPU time and wall-clock leads."""
     fig, axs = plt.subplots(1, 2, figsize=(DC, 2.5), sharex=True)
-    for m, (nm, c, st) in OFF_STYLE.items():
+    labels = {"step_gpu_ms": "decode step, GPU time (ms)", "step_ms": "decode step, wall-clock (ms)"}
+    for m, (nm, c, st) in style.items():
         rs = sorted([r for r in d if r["method"] == m], key=lambda r: r["ctx"])
-        axs[0].plot([r["ctx"] / 1024 for r in rs], [r["step_ms"] for r in rs], st, color=c, ms=3.5, lw=1.2, label=nm)
-        axs[1].plot([r["ctx"] / 1024 for r in rs], [r["step_gpu_ms"] for r in rs], st, color=c, ms=3.5, lw=1.2)
-    for ax, yl in zip(axs, ["decode step, wall-clock (ms)", "decode step, GPU time (ms)"]):
-        ax.set_xscale("log", base=2); ax.set_xticks([32, 256, 512, 1024]); ax.set_xticklabels(["32k", "256k", "512k", "1M"]); ax.set_xlabel("context length (tokens)"); ax.set_ylabel(yl); ax.grid(alpha=.25, which="both", lw=.4); ax.set_ylim(0)
-    h, l = axs[0].get_legend_handles_labels(); fig.legend(h, l, frameon=False, fontsize=6.5, loc="lower center", ncol=3, bbox_to_anchor=(0.5, -0.06)); fig.tight_layout(rect=(0, 0.1, 1, 1)); save(fig, "fig_offload.pdf")
+        if not rs: continue
+        for ax, key in zip(axs, order):
+            ax.plot([r["ctx"] / 1024 for r in rs], [r[key] for r in rs], st, color=c, ms=3.5, lw=1.2, label=nm if ax is axs[0] else None)
+    for ax, key, tag in zip(axs, order, "ab"):
+        ax.set_xscale("log", base=2); ax.set_xticks([32, 256, 512, 1024]); ax.set_xticklabels(["32k", "256k", "512k", "1M"])
+        ax.set_xlabel("context length (tokens)"); ax.set_ylabel(labels[key]); ax.set_title(f"({tag})", loc="left", fontsize=8)
+        ax.grid(alpha=.25, which="both", lw=.4)
+        if logy:
+            ax.set_yscale("log"); ax.set_yticks([50, 100, 200, 400]); ax.set_yticklabels(["50", "100", "200", "400"]); ax.minorticks_off()
+        else:
+            ax.set_ylim(0)
+    h, l = axs[0].get_legend_handles_labels()
+    fig.legend(h, l, frameon=False, fontsize=6.5, loc="lower center", ncol=ncol, bbox_to_anchor=(0.5, -0.06))
+    fig.tight_layout(rect=(0, 0.1, 1, 1)); save(fig, name)
+
+def fig_offload():
+    d = [r for r in load(pick("B_e2e_offload_synth_copyidx.json")) if "method" in r and not r.get("oom")]
+    offload_panels(d, MATCH_STYLE, ("step_gpu_ms", "step_ms"), "fig_offload.pdf", ncol=2, logy=True)
+    offload_panels(d, OFF_STYLE, ("step_ms", "step_gpu_ms"), "fig_offload_native.pdf")
     fig, ax = plt.subplots(figsize=(SC, 2.4))
     for m, (nm, c, st) in OFF_STYLE.items():
         rs = sorted([r for r in d if r["method"] == m], key=lambda r: r["ctx"])

@@ -7,6 +7,7 @@
 \usepackage{xcolor}
 \usepackage{microtype}
 \usepackage[hidelinks]{hyperref}
+\usepackage{url}
 \usepackage{caption}
 \usepackage{placeins}
 \raggedbottom
@@ -34,6 +35,9 @@
 \begin{abstract}
 When agentic sessions run to a million tokens with many sessions resident at once, the KV cache and the index that ranks it live in host memory, and the scan that ranks all $n$ keys for a top-$k$ step becomes the traffic that bounds decoding. We present \ours, a key scan in which each query decides how many bits of each key channel to read. The 4-bit K cache is stored channel-major as bit planes, so a prefix of $t$ planes is exactly the channel's $t$-bit quantizer, and the query spends its bit budget by reverse water-filling over the variance-weighted importance of its channels. At one million tokens on Qwen3-8B a decode step is \ratioGPUchanr$\times$ faster in GPU time than with the 136-bit scans of Double Sparsity, Loki and SparQ $r=32$, and in the same GPU time as SparQ's 68-bit read ($r=16$) \ours{} reads \fortyEightBytesFewerPct\% fewer bytes with lower attention error on six of seven model and context settings. On RULER-style tasks every per-token scan matches exact top-$k$ decoding, and on real coding-agent sessions \ours{} reaches the step agreement of the most accurate 136-bit scan at 92 bits. The store is the 4-bit K copy a quantized serving stack already holds, and the method is not faster when the index is resident in GPU memory.
 \end{abstract}
+
+\begin{center}\small Code and results: \url{https://github.com/vivekkalyanarangan30/fathom}\end{center}
+
 \end{minipage}\end{center}
 \vspace{1.2em}
 ]
@@ -88,6 +92,8 @@ everything in HBM & arithmetic per scanned bit & not faster; the scan kernel is 
 \paragraph{Block and landmark selection.} Quest~\cite{quest} scores 16-token pages by per-channel minimum and maximum keys; ShadowKV~\cite{shadowkv} scores 8-token chunks by their mean key, keeps a low-rank K cache on the GPU and offloads V; InfLLM~\cite{infllm} scores blocks by representative tokens. This is the ``score fewer things'' lever, orthogonal to ours. Our landmark baseline follows ShadowKV, the mean key of each 8-token block in fp16, 256 bits per token, run at the paper's $k$ rather than at the block budgets those systems use. Both systems keep their landmark index in GPU memory; the host-memory setting of \S\ref{sec:offload} is ours, not theirs.
 
 \paragraph{Thumbnail scans.} FFD~\cite{ffd} splits K into a 2-bit thumbnail and an 8-bit residual, selects by a score threshold and fuses scan and attention in one kernel. Our 2-bit thumbnail baseline reads all 128 channels at two planes (288 bits per token) and selects top-$k$ with exact attention on the selected set, which is more generous than FFD's own scoring; the bit-plane store makes it a special case of ours with uniform depth.
+
+\paragraph{The store as the index.} Self-Indexing KVCache~\cite{selfindex} makes the same structural argument, that a compressed copy of the keys can serve as the selection index with no separate structure, and realises it with a sign-based 1-bit vector quantizer, one fixed depth for every channel and every query. Louver~\cite{louver} builds an index that answers a threshold query over the keys with no false negatives, again at a fixed representation. Our difference is the depth itself: a prefix of the bit planes is an exact quantizer, so depth becomes a per-query, per-channel decision rather than a design-time constant, and A4 in \S\ref{sec:abl} measures what that freedom is worth against uniform depth at equal bytes.
 
 \paragraph{KV quantization.} KIVI~\cite{kivi} (2-bit, per-channel keys and per-token values), KVQuant~\cite{kvquant} (non-uniform, pre-RoPE, dense-and-sparse) and TurboQuant~\cite{turboquant} (random rotation, Lloyd--Max scalar quantizer and a 1-bit residual) compress the cache itself; Any-Precision LLM~\cite{anyprecision} stores weights in bit planes so that a prefix is a lower-precision model. Our layout applies the bit-plane idea to the K cache and reads a per-query prefix per channel.
 
@@ -159,7 +165,7 @@ When the store lives in host memory, a GPU kernel reading mapped host memory wor
 \subsection{The target regime: decoding with the KV cache and its index in host memory}\label{sec:offload}
 \begin{figure*}[t]\centering
 \fig{fig_offload.pdf}{\textwidth}{offload wall and GPU time}
-\caption{Decode step versus context with K/V rows and scan index in pinned host memory (A100, Qwen3-8B, $k=512$, batch 1, synthetic KV at every point). (a) wall-clock, (b) GPU time. Every method's index is moved with the contiguous gather of \S\ref{sec:gather}.}
+\caption{Decode step versus context with K/V rows and scan index in pinned host memory (A100, Qwen3-8B, $k=512$, batch 1, synthetic KV at every point), log scale. (a) GPU time, the primary metric; (b) wall-clock. Our 74-bit read is drawn because it is the budget that reaches the error of the two 136-bit scans across the settings of Table~\ref{tab:equalerror}; the landmark index and the thumbnail are at their own cost and are not matched on that metric. Table~\ref{tab:offload} gives every budget and SparQ $r=16$, and \S\ref{sec:h2h} compares that read with time held fixed. Every method's index is moved with the contiguous gather of \S\ref{sec:gather}.}
 \label{fig:offload}
 \end{figure*}
 \begin{table*}[t]\centering\small
